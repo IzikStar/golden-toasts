@@ -11,6 +11,8 @@ export const getDatabaseConfig = (): SequelizeModuleOptions => ({
   username: process.env.DB_USER ?? 'postgres',
   password: process.env.DB_PASSWORD ?? 'postgres',
   database: process.env.DB_NAME ?? 'toastsDB',
+  // Set DB_LOGGING=false to silence Sequelize's SQL logging (used by the e2e tests).
+  logging: process.env.DB_LOGGING === 'false' ? false : console.log,
   autoLoadModels: true,
   synchronize: true,
 });

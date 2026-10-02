@@ -175,7 +175,7 @@ export class UserService {
       });
 
       if (rowsAffected === 0) {
-        await transaction.rollback();
+        // The catch block below rolls the transaction back.
         throw new NotFoundException(`User ${id} not found`);
       }
       await transaction.commit();
@@ -238,7 +238,11 @@ export class UserService {
       );
 
       if (editor.id === userIdToEdit && (dto.username || dto.password)) {
-        const payload = { id: userToEdit.id, username: userToEdit.username };
+        const payload = {
+          id: userToEdit.id,
+          username: userToEdit.username,
+          isAdmin: userToEdit.isAdmin,
+        };
         const token = this.jwtService.sign(payload);
         return { user: userToEdit, newToken: token };
       }

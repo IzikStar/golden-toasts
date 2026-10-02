@@ -26,7 +26,9 @@ import { Toast } from '../../toast/entities/toast.entity';
   ],
   validate: {
     checkOneNonNull: function () {
-      if (this.crimeToastId === null && this.reason === null) {
+      // `== null` also catches fields that were omitted (undefined), which
+      // is how an accusation without either value reaches the model.
+      if (this.crimeToastId == null && this.reason == null) {
         throw new Error(
           'Either crimeToast or reason must be provided, but not both null.'
         );
