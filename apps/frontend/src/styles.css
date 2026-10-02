@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* You can add global styles to this file, and also import other style files */
+
+[data-slot='dialog-close'] svg {
+  width: 24px !important;
+  height: 24px !important;
+  color: #ff8700 !important;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  width: 24px !important;
+  height: 24px !important;
+  color: white !important;
+  filter: invert(100%) !important;
+  cursor: pointer;
+}
+
+input[type='date']::-moz-calendar-picker-indicator {
+  width: 24px !important;
+  height: 24px !important;
+  color: white !important;
+  cursor: pointer;
+}
+
+input[type='datetime-local']::-webkit-calendar-picker-indicator,
+input[type='month']::-webkit-calendar-picker-indicator,
+input[type='week']::-webkit-calendar-picker-indicator {
+  width: 24px !important;
+  height: 24px !important;
+  color: white !important;
+  filter: invert(100%) !important;
+  cursor: pointer;
+}

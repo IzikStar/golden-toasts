@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  width="256" height="256"
+  viewBox="0 0 180 180"
+  role="img" aria-label="GoldenToasts">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFAA33" />
+      <stop offset="100%" stop-color="#FF5500" />
+    </linearGradient>
+    <filter id="ds" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="b" />
+      <feOffset in="b" dx="1" dy="1" result="o" />
+      <feMerge>
+        <feMergeNode in="o" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <text x="50%" y="50%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="Segoe UI Emoji"
+    font-size="170px"
+    fill="url(#grad)"
+    filter="url(#ds)">
+    🍻
+  </text>
+</svg>

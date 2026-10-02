@@ -1,0 +1,7 @@
+{
+  "path": "./src/components/ui",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
+}

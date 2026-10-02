@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="80" viewBox="0 0 360 80" xmlns="http://www.w3.org/2000/svg" role="img"
+    aria-label="GoldenToasts Logo Option 4">
+    <defs>
+        <!-- subtle gold gradient -->
+        <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FFAA33" />
+            <stop offset="100%" stop-color="#FF5500" />
+        </linearGradient>
+        <!-- light drop shadow -->
+        <filter id="ds4" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="b" />
+            <feOffset in="b" dx="1" dy="1" result="o" />
+            <feMerge>
+                <feMergeNode in="o" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <style>
+            .logo-text4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 46px;
+            font-weight: 700;
+            fill: url(#grad4);
+            filter: url(#ds4);
+            }
+        </style>
+    </defs>
+
+    <!-- 🥂 icon -->
+    <text x="0" y="58"
+        font-family="Segoe UI Emoji"
+        font-size="52px"
+        filter="url(#ds4)">
+        🥂
+    </text>
+
+    <!-- “GoldenToasts” text -->
+    <text x="56" y="58" class="logo-text4">
+        GoldenToasts
+    </text>
+</svg>
