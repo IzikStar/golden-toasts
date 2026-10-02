@@ -1,5 +1,7 @@
 # GoldenToasts (Toasts & Criminals)
 
+[![CI](https://github.com/IzikStar/golden-toasts/actions/workflows/ci.yml/badge.svg)](https://github.com/IzikStar/golden-toasts/actions/workflows/ci.yml)
+
 **A full-stack web app that runs a team's "toast" tradition: schedule toasts, invite colleagues, track who actually delivered, and publicly call out the ones who didn't.**
 
 Built as an Nx monorepo with a **NestJS + PostgreSQL** REST API and a **React + Redux Toolkit** single-page app, with JWT authentication and role-based permissions.
@@ -59,7 +61,7 @@ The app keeps everyone honest:
 
 **Tooling**
 - Nx 21 monorepo (`apps/` holds the two applications; `packages/` is reserved for shared libraries and is currently empty)
-- ESLint 9 (flat config), Prettier, Jest (backend test runner)
+- ESLint 9 (flat config), Prettier, Jest + Supertest (backend unit and e2e tests), GitHub Actions CI
 
 ## Architecture
 
@@ -166,14 +168,26 @@ npx nx run-many -t build        # production builds -> dist/apps/*
 npx nx run-many -t lint
 npx nx run-many -t typecheck
 npx nx run-many -t test
+npx nx test backend             # backend unit tests (add --coverage for a report)
+npx nx e2e backend              # backend e2e tests against PostgreSQL (see below)
 npx nx show project backend     # list every target of a project
 ```
+
+### Tests
+
+- **Unit tests** (`npx nx test backend`) cover the rules that matter most: the JWT secret policy, the global `AuthGuard` and `IsAdminGuard`, the half-year period boundaries, and the permission and business rules in the auth, user, toast, invite and accusation services. Sequelize models are mocked, so no database is needed. The specs live next to the code (`*.spec.ts`).
+- **End-to-end tests** (`npx nx e2e backend`, in `apps/backend/e2e/`) boot the real `AppModule` with the same validation pipe as `main.ts`, and drive it over HTTP with Supertest against a real PostgreSQL database: sign-up and login, auth and admin guards, creating a toast with invites, accepting an invite, and invites going back to pending when the host moves the date. The suite drops and recreates its tables, so it only runs against a database named by `E2E_DB_NAME` (default `toasts_e2e`) and refuses names without `e2e` or `test` in them. It uses the same `DB_HOST` / `DB_PORT` / `DB_USER` / `DB_PASSWORD` variables as the app:
+  ```bash
+  docker exec toasts-db createdb -U postgres toasts_e2e   # once
+  npx nx e2e backend
+  ```
+- **CI** (`.github/workflows/ci.yml`) runs lint, typecheck, unit tests and builds for both apps, then the e2e suite against a PostgreSQL 16 service container, on every push and pull request to `main`.
 
 ## Status and roadmap
 
 The app was built for a real team's tradition. Things I'd improve next:
 
-- **Tests**: Jest is set up for the backend, but there are no test suites yet. The permission rules in the services are the first thing to cover.
+- **Tests**: the backend has unit tests for its guards, configuration and service rules, plus an e2e suite against PostgreSQL, all run in CI (see [Tests](#tests)). The frontend has no tests yet; component tests with Vitest and React Testing Library are next.
 - **Migrations**: replace `synchronize: true` with Sequelize migrations and a seed script.
 - **Configuration**: read the frontend's API URL from an environment variable.
 - **Auth hardening**: move the token to an httpOnly cookie and align the token lifetimes (the default is 1h, but login issues 30d tokens).

@@ -39,6 +39,16 @@
       "options": {
         "passWithNoTests": true
       }
+    },
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/backend",
+        "command": "jest --config jest.e2e.config.ts --runInBand",
+        "env": {
+          "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
+        }
+      }
     }
   }
 }
